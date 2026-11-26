@@ -413,6 +413,8 @@ export async function createApp({
         '/app.js': 'app.js',
         '/styles.css': 'styles.css',
         '/theme.css': 'theme.css',
+        '/developer.css': 'developer.css',
+        '/developer.js': 'developer.js',
       };
       if (!assets[p]) throw fail(404, '파일 없음');
       const file = assets[p],

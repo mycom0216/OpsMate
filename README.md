@@ -20,6 +20,10 @@ npm start
 
 `ADMIN_PASSWORD`를 초기화 전에 지정하면 admin에 적용합니다. 12자 이상이 필요합니다. 실행 중 변경은 `POST /api/password`에 현재 비밀번호와 새 비밀번호를 보내며 모든 기존 세션이 폐기됩니다. Windows에서는 `data` 폴더 ACL을 운영자 계정으로 제한합니다.
 
+## 개발자 작업 공간
+
+코드 편집기 형태의 패널에서 실제 서버 JSON, 복사 가능한 API 요청과 에이전트 연동 코드를 확인합니다. GET 요청 확인 버튼은 읽기 전용 조회만 수행합니다. 이벤트 스트림은 현재 브라우저가 수신한 HTTP·WebSocket 기록이며 서버 로그 원문과 구분합니다.
+
 ## 구현 기능
 
 - HttpOnly 세션 쿠키, scrypt 해시, admin/operator/viewer 권한, 계정 생성과 역할 변경, 감사 로그

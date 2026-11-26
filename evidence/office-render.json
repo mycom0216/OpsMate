@@ -30,18 +30,6 @@
     "pdf": "요구사항분석서.pdf"
   },
   {
-    "pages": 3,
-    "renderer": "Microsoft Word",
-    "file": "테스트결과서.docx",
-    "pdf": "테스트결과서.pdf"
-  },
-  {
-    "pages": 3,
-    "renderer": "Microsoft Word",
-    "file": "포트폴리오.docx",
-    "pdf": "포트폴리오.pdf"
-  },
-  {
     "pages": 2,
     "renderer": "Microsoft Word",
     "file": "프로젝트결과보고서.docx",
@@ -54,8 +42,20 @@
     "pdf": "프로젝트기획서.pdf"
   },
   {
+    "file": "테스트결과서.docx",
+    "pages": 3,
+    "renderer": "Microsoft Word",
+    "pdf": "테스트결과서.pdf"
+  },
+  {
+    "file": "포트폴리오.docx",
+    "pages": 3,
+    "renderer": "Microsoft Word",
+    "pdf": "포트폴리오.pdf"
+  },
+  {
+    "file": "최종발표자료.pptx",
     "pages": 15,
-    "renderer": "Microsoft PowerPoint",
-    "file": "최종발표자료.pptx"
+    "renderer": "Microsoft PowerPoint"
   }
 ]

@@ -7,6 +7,7 @@
     <title>OpsMate 통합 관제</title>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/theme.css" />
+    <link rel="stylesheet" href="/developer.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
@@ -32,10 +33,20 @@
         <div id="loginError" role="alert"></div>
       </form>
       <aside>
-        <span class="eyebrow">OBSERVE · UNDERSTAND · RESPOND</span>
-        <h2>운영의 흐름을<br />한눈에.</h2>
-        <p>실시간 지표 · 장애 이력 · 매뉴얼 근거 검색</p>
-        <div class="orbit">OM</div>
+        <span class="eyebrow">BUILT FOR THE PEOPLE WHO KEEP IT RUNNING</span>
+        <h2>See the signal.<br /><span>Find the cause.</span></h2>
+        <p>지표, 로그, 장애의 맥락을 하나의 작업 공간에서.</p>
+        <div class="code-window login-editor">
+          <div class="editor-chrome">
+            <span class="window-dots"><i></i><i></i><i></i></span><span>agent.mjs</span
+            ><span class="editor-language">JAVASCRIPT</span>
+          </div>
+          <div id="loginCode" class="code-lines"></div>
+          <div class="editor-foot"><span>Node.js 24</span><span>실제 에이전트 연동 예시</span></div>
+        </div>
+        <div class="login-stack">
+          <span>Node.js 24</span><span>WebSocket</span><span>SQLite</span><span>Ollama</span>
+        </div>
       </aside>
     </div>
     <div id="console" hidden>
@@ -86,6 +97,51 @@
         </header>
         <div id="notice" role="status" hidden></div>
         <section id="dashboard" class="page">
+          <div class="developer-hero">
+            <div class="hero-copy">
+              <div class="hero-label">
+                <span class="tiny-square"></span> THE OPERATIONS WORKBENCH
+                <span class="hero-version">/ 01</span>
+              </div>
+              <h2>
+                Observe.<br /><span>Understand.</span><br />Respond<span class="hero-period"
+                  >.</span
+                >
+              </h2>
+              <p>
+                인프라의 신호에서 장애의 근거까지.<br />운영에 필요한 맥락을 코드와 함께 확인하세요.
+              </p>
+              <div class="hero-capabilities">
+                <span><i></i>실시간 관측</span><span>근거 기반 분석</span><span>운영자 대응</span>
+              </div>
+            </div>
+            <div class="code-window workbench-editor">
+              <div class="editor-chrome">
+                <span class="window-dots"><i></i><i></i><i></i></span
+                ><span>opsmate / workspace</span><span class="editor-language">READ ONLY</span>
+              </div>
+              <div class="editor-tabs" role="tablist" aria-label="개발자 코드 보기">
+                <button role="tab" aria-selected="true" data-code-tab="snapshot">
+                  { } snapshot.json</button
+                ><button role="tab" aria-selected="false" data-code-tab="request">
+                  JS request.js</button
+                ><button role="tab" aria-selected="false" data-code-tab="agent">JS agent.mjs</button
+                ><button id="copyDeveloperCode" class="copy-code" aria-label="표시 코드 복사">
+                  복사
+                </button>
+              </div>
+              <div
+                id="developerCode"
+                class="code-lines"
+                role="tabpanel"
+                aria-label="실제 응답 및 API 코드"
+              ></div>
+              <div class="editor-foot">
+                <span id="codeCaption">실제 API 응답을 기다리는 중</span
+                ><button id="runSnapshotRequest"><span>▶</span> GET 요청 확인</button>
+              </div>
+            </div>
+          </div>
           <div class="summary" id="summary"></div>
           <div class="split">
             <article class="panel chart-panel">
@@ -135,6 +191,27 @@
               <span id="updatedAt" class="muted"></span>
             </div>
             <div id="serverCards" class="server-cards"></div>
+          </article>
+          <article class="terminal-panel">
+            <div class="terminal-heading">
+              <div>
+                <span class="terminal-symbol">›_</span>
+                <h2>이벤트 스트림</h2>
+                <span class="terminal-live">LIVE</span>
+              </div>
+              <span class="terminal-description">이 브라우저가 수신한 HTTP / WebSocket 이벤트</span
+              ><button id="clearDeveloperTrace">기록 비우기</button>
+            </div>
+            <div
+              id="developerTrace"
+              class="terminal-lines"
+              role="log"
+              aria-label="현재 세션 수신 이벤트"
+            ></div>
+            <div class="terminal-prompt">
+              <span>opsmate</span><span class="prompt-path">~/observability</span
+              ><span class="prompt-arrow">❯</span><span>수신 대기 중</span><i></i>
+            </div>
           </article>
           <article class="panel incident-panel">
             <div class="panel-title">

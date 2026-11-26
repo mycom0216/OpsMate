@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-11-26T06:20:17.547Z",
+  "real_snapshot": true,
+  "tabs": 3,
+  "read_only_request": true,
+  "copy_verified": true,
+  "websocket_trace": true,
+  "clear_trace": true,
+  "tested_widths": [
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "horizontal_overflows": [],
+  "page_errors": []
+}

@@ -25,16 +25,6 @@
     "exit_code": 0
   },
   {
-    "output": "\nParagraphs: 31\nAll validations PASSED!",
-    "file": "테스트결과서.docx",
-    "exit_code": 0
-  },
-  {
-    "output": "\nParagraphs: 17\nAll validations PASSED!",
-    "file": "포트폴리오.docx",
-    "exit_code": 0
-  },
-  {
     "output": "\nParagraphs: 38\nAll validations PASSED!",
     "file": "프로젝트결과보고서.docx",
     "exit_code": 0
@@ -42,6 +32,16 @@
   {
     "output": "\nParagraphs: 32\nAll validations PASSED!",
     "file": "프로젝트기획서.docx",
+    "exit_code": 0
+  },
+  {
+    "file": "포트폴리오.docx",
+    "output": "\nParagraphs: 18\nAll validations PASSED!",
+    "exit_code": 0
+  },
+  {
+    "file": "테스트결과서.docx",
+    "output": "\nParagraphs: 32\nAll validations PASSED!",
     "exit_code": 0
   }
 ]

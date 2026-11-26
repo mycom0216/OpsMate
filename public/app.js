@@ -1,3 +1,4 @@
+import { initializeDeveloperWorkbench, updateDeveloperWorkbench } from './developer.js';
 /** API 응답은 textContent/텍스트 노드로만 표시하여 저장된 로그의 HTML 실행을 막습니다. */
 const $ = (id) => document.getElementById(id);
 let user = null,
@@ -149,8 +150,9 @@ function icon(name) {
   }
   return n;
 }
-function renderSnapshot(data) {
+function renderSnapshot(data, transport = 'HTTP') {
   snapshot = data;
+  updateDeveloperWorkbench(data, transport);
   const actual = data.servers.filter((s) => s.source !== 'demo'),
     demo = data.servers.filter((s) => s.source === 'demo'),
     active = data.incidents.filter((i) => i.status !== 'resolved');
@@ -634,7 +636,7 @@ function connect() {
   };
   ws.onmessage = (e) => {
     const m = JSON.parse(e.data);
-    if (m.type === 'snapshot') renderSnapshot(m.data);
+    if (m.type === 'snapshot') renderSnapshot(m.data, 'WS');
   };
   ws.onclose = () => {
     if (user) {
@@ -746,6 +748,7 @@ $('refreshDashboard').onclick = async () => {
     b.disabled = false;
   }
 };
+initializeDeveloperWorkbench({ refresh, onError: notice });
 try {
   await enter(await api('/me'));
 } catch {
