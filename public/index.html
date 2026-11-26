@@ -1,0 +1,252 @@
+<!doctype html>
+<!-- 한국어 관제 화면입니다. 외부 CDN 없이 정적 파일만으로 동작합니다. -->
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OpsMate 통합 관제</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/theme.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div id="loginView" class="login">
+      <form id="loginForm" class="login-card">
+        <span class="eyebrow">OPERATIONS INTELLIGENCE</span>
+        <h1>OpsMate<span>●</span></h1>
+        <p>인프라의 상태를 확인하고<br />근거와 함께 장애에 대응하세요.</p>
+        <label
+          >아이디<input
+            name="username"
+            autocomplete="username"
+            required
+            placeholder="admin / operator / viewer" /></label
+        ><label
+          >비밀번호<input
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required /></label
+        ><button type="submit">관제 콘솔 로그인 →</button>
+        <p class="muted">초기 비밀번호는 로컬 data/bootstrap.json에서 확인합니다.</p>
+        <div id="loginError" role="alert"></div>
+      </form>
+      <aside>
+        <span class="eyebrow">OBSERVE · UNDERSTAND · RESPOND</span>
+        <h2>운영의 흐름을<br />한눈에.</h2>
+        <p>실시간 지표 · 장애 이력 · 매뉴얼 근거 검색</p>
+        <div class="orbit">OM</div>
+      </aside>
+    </div>
+    <div id="console" hidden>
+      <aside class="sidebar">
+        <a class="brand" href="/"
+          ><span class="brand-mark">o<span></span></span>OpsMate<span class="version">v1.0</span></a
+        >
+        <div class="workspace-switch">
+          <span class="workspace-icon">OM</span>
+          <div><b>인프라 운영 워크스페이스</b><small>로컬 관제 환경</small></div>
+          <span class="workspace-dot"></span>
+        </div>
+        <p class="eyebrow nav-label">OBSERVABILITY</p>
+        <nav>
+          <button data-tab="dashboard" class="active">통합 대시보드</button
+          ><button data-tab="incidents">장애 대응</button><button data-tab="logs">로그 탐색</button
+          ><button data-tab="servers">서버 관리</button
+          ><button data-tab="manuals">운영 매뉴얼</button
+          ><button data-tab="report">운영 보고서</button
+          ><button data-tab="admin" id="adminNav">계정 및 감사</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="security-status"><span></span> 운영자 검토 기반 대응</div>
+          <p>AI는 원인을 제안하며<br />서버 명령을 실행하지 않습니다.</p>
+          <button id="logout">로그아웃 <span>↗</span></button>
+        </div>
+      </aside>
+      <main>
+        <div class="topbar">
+          <div class="breadcrumb">워크스페이스 <span>/</span> <b>인프라 관제</b></div>
+          <div class="topbar-right">
+            <span id="connection" class="pill">연결 중</span><span class="topbar-divider"></span
+            ><span id="userInfo"></span><span class="avatar" id="avatar">A</span>
+          </div>
+        </div>
+        <header>
+          <div>
+            <span class="eyebrow">OPERATIONS OVERVIEW</span>
+            <h1 id="pageTitle">통합 대시보드</h1>
+            <p id="pageSubtitle">인프라의 신호를 연결하고, 장애 대응의 근거를 확인하세요.</p>
+          </div>
+          <div class="header-right">
+            <span class="environment"><span></span> 로컬 환경</span
+            ><button id="refreshDashboard" class="refresh-button" aria-label="현재 상태 새로고침">
+              새로고침
+            </button>
+          </div>
+        </header>
+        <div id="notice" role="status" hidden></div>
+        <section id="dashboard" class="page">
+          <div class="summary" id="summary"></div>
+          <div class="split">
+            <article class="panel chart-panel">
+              <div class="panel-title">
+                <div>
+                  <span class="panel-kicker">RESOURCE ANALYTICS</span>
+                  <h2>리소스 추이 <span class="live-dot"></span></h2>
+                </div>
+                <select id="chartServer" aria-label="차트 서버"></select>
+              </div>
+              <div class="legend">
+                <span class="cpu">CPU <b id="latestCpu">—</b></span
+                ><span class="ram">RAM <b id="latestRam">—</b></span
+                ><span class="chart-window">최근 120개 샘플</span>
+              </div>
+              <div class="chart-container">
+                <svg
+                  id="chart"
+                  viewBox="0 0 760 230"
+                  role="img"
+                  aria-label="CPU 및 RAM 시계열"
+                ></svg>
+                <div id="chartTooltip" hidden></div>
+              </div>
+              <p id="chartNote" class="muted"></p>
+            </article>
+            <article class="panel incident-breakdown">
+              <div class="panel-title">
+                <div>
+                  <span class="panel-kicker">INCIDENT BREAKDOWN</span>
+                  <h2>장애 분류</h2>
+                </div>
+                <span class="counter-label" id="incidentCount">0건</span>
+              </div>
+              <div id="categories"></div>
+              <div class="category-legend">
+                <span class="actual-key"></span>실제 장애 <span class="demo-key"></span>가상 장애
+              </div>
+            </article>
+          </div>
+          <article class="panel fleet-panel">
+            <div class="panel-title">
+              <div>
+                <span class="panel-kicker">MONITORED INFRASTRUCTURE</span>
+                <h2>모니터링 서버 <span id="fleetCount" class="heading-count">0</span></h2>
+              </div>
+              <span id="updatedAt" class="muted"></span>
+            </div>
+            <div id="serverCards" class="server-cards"></div>
+          </article>
+          <article class="panel incident-panel">
+            <div class="panel-title">
+              <div>
+                <span class="panel-kicker">RECENT ACTIVITY</span>
+                <h2>최근 장애</h2>
+              </div>
+              <button data-tab="incidents" class="subtle">전체 장애 보기 →</button>
+            </div>
+            <div id="recentIncidents"></div>
+          </article>
+        </section>
+        <section id="incidents" class="page" hidden>
+          <article class="panel">
+            <div class="panel-title">
+              <h2>장애 처리 대기열</h2>
+              <span class="muted">접수 → 확인 → 해결</span>
+            </div>
+            <div id="incidentTable"></div>
+          </article>
+          <article id="incidentDetail" class="panel" hidden></article>
+        </section>
+        <section id="logs" class="page" hidden>
+          <article class="panel">
+            <form id="logForm" class="toolbar">
+              <input name="q" placeholder="로그 내용 검색" aria-label="로그 검색어" /><select
+                name="level"
+                aria-label="로그 레벨"
+              >
+                <option value="">모든 레벨</option>
+                <option>INFO</option>
+                <option>WARN</option>
+                <option>ERROR</option></select
+              ><button>검색</button>
+            </form>
+            <p class="muted">최신 200건 · 에이전트가 전송한 로그와 가상 로그를 구분합니다.</p>
+            <div id="logResults"></div>
+          </article>
+        </section>
+        <section id="servers" class="page" hidden>
+          <article class="panel">
+            <h2>서버 목록</h2>
+            <div id="serverTable"></div>
+          </article>
+          <article class="panel" id="serverEditor">
+            <h2>새 서버 등록</h2>
+            <form id="serverForm" class="toolbar">
+              <input
+                name="name"
+                required
+                maxlength="100"
+                placeholder="표시 이름"
+                aria-label="서버 이름"
+              /><input
+                name="hostname"
+                required
+                maxlength="200"
+                placeholder="호스트 이름"
+                aria-label="호스트"
+              /><select name="source" aria-label="출처">
+                <option value="agent">실제 에이전트</option>
+                <option value="demo">가상 데모</option></select
+              ><button>등록</button>
+            </form>
+            <pre id="agentToken"></pre>
+            <p class="muted">
+              등록은 네트워크 접속을 수행하지 않습니다. 발급된 토큰으로 에이전트를 별도 실행합니다.
+            </p>
+          </article>
+        </section>
+        <section id="manuals" class="page" hidden><div id="manualList"></div></section>
+        <section id="report" class="page" hidden>
+          <article class="panel">
+            <div class="panel-title">
+              <h2>누적 운영 보고서</h2>
+              <button id="downloadReport">JSON 다운로드</button>
+            </div>
+            <p class="muted">현재 DB 집계입니다. 시스템 성능이나 AI 정확도를 뜻하지 않습니다.</p>
+            <pre id="reportContent"></pre>
+          </article>
+        </section>
+        <section id="admin" class="page" hidden>
+          <article class="panel">
+            <h2>계정과 역할</h2>
+            <div id="userTable"></div>
+            <form id="userForm" class="toolbar">
+              <input
+                name="username"
+                required
+                placeholder="새 아이디"
+                aria-label="새 아이디"
+              /><input
+                name="password"
+                type="password"
+                minlength="12"
+                required
+                placeholder="비밀번호 12자 이상"
+                aria-label="초기 비밀번호"
+              /><select name="role" aria-label="역할">
+                <option value="viewer">viewer</option>
+                <option value="operator">operator</option>
+                <option value="admin">admin</option></select
+              ><button>계정 생성</button>
+            </form>
+          </article>
+          <article class="panel">
+            <h2>감사 로그</h2>
+            <div id="auditTable"></div>
+          </article>
+        </section>
+        <footer>OpsMate · AI 제안은 운영자 검토가 필요합니다. 자동 명령 실행 없음.</footer>
+      </main>
+    </div>
+  </body>
+</html>

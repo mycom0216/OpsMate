@@ -1,0 +1,23 @@
+{
+  "ai_queries": 3,
+  "docker": "실제 이미지 빌드 및 컨테이너 기동, 내부 HTTP 통합 검사 9개 통과. Windows 호스트 공개 포트 접속 미확인",
+  "mariadb": "MariaDB 11.4 전용 검증 DB에서 스키마·초기화·API 왕복 9개 통과",
+  "tests": 28,
+  "ui_errors": 0,
+  "checked_at": "2026-11-26T05:57:55.011918Z",
+  "ai_contract_pass": 3,
+  "rag_top1": 0.9333333333333333,
+  "github": "mycom0216/OpsMate 신규 비공개 저장소 생성 및 repo workflow 권한 확인. 최종 Commit Push 및 HEAD 검증은 별도 최종검증 파일에 기록",
+  "rag_queries": 15,
+  "known_runtime_vulnerabilities": 0,
+  "test_failures": 0,
+  "remaining": [
+    "Windows Docker 공개 포트 접속",
+    "독립 현업 데이터의 검색·원인 정확도",
+    "장시간 부하와 원격 TLS",
+    "에이전트 재전송 큐"
+  ],
+  "rag_recall3": 1,
+  "documents_complete": true,
+  "delivery_complete": false
+}

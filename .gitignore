@@ -1,0 +1,14 @@
+node_modules/
+tools/node_modules/
+tools/pydeps/
+.env
+data/*.sqlite*
+data/bootstrap.json
+data/*.token
+*.zip
+tmp/
+evidence/browser-profile/
+data/*.pid
+evidence/rendered/
+evidence/render-probe/
+docs/*.inspect.ndjson

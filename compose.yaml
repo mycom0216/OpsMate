@@ -1,0 +1,13 @@
+# 로컬 데모는 루프백 주소에만 공개합니다. 원격 서비스에는 TLS 프록시가 필요합니다.
+services:
+  opsmate:
+    build: .
+    ports: ['127.0.0.1:3100:3100']
+    environment:
+      DEMO_MODE: 'true'
+      AI_ENABLED: 'false'
+      OLLAMA_URL: 'http://host.docker.internal:11434'
+    volumes: ['opsmate-data:/app/data']
+    restart: unless-stopped
+volumes:
+  opsmate-data:

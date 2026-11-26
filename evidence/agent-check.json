@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-11-26T05:41:14.985Z",
+  "transport": "실제 Node 에이전트 → loopback HTTP",
+  "server_id": 3,
+  "metric_samples": 2,
+  "source": "agent",
+  "log_received": true,
+  "note": "발생시킨 테스트 오류 로그이며 현업 장애가 아님. 테스트 후 수집 비활성화."
+}

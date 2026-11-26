@@ -1,0 +1,166 @@
+{
+  "evaluated_at": "2026-11-26T05:38:06.554Z",
+  "scope": "작성한 매뉴얼 5개와 수동 작성 질의 15개. 학습/운영 데이터 검증 아님. BM25 오프라인 검색 평가.",
+  "cases": [
+    {
+      "query": "CPU 사용률이 높아요",
+      "expected": "cpu",
+      "ranked": [
+        "memory",
+        "cpu",
+        "network"
+      ],
+      "top1": false,
+      "recall3": true
+    },
+    {
+      "query": "CPU 부하 상승",
+      "expected": "cpu",
+      "ranked": [
+        "cpu",
+        "memory"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "프로세스 cpu 과부하",
+      "expected": "cpu",
+      "ranked": [
+        "cpu",
+        "memory"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "메모리 부족 RAM",
+      "expected": "memory",
+      "ranked": [
+        "memory",
+        "disk"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "메모리 누수 확인",
+      "expected": "memory",
+      "ranked": [
+        "memory",
+        "log",
+        "disk"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "OOM 캐시 증가",
+      "expected": "memory",
+      "ranked": [
+        "memory",
+        "disk",
+        "cpu"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "디스크 공간 부족",
+      "expected": "disk",
+      "ranked": [
+        "disk"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "no space left on device",
+      "expected": "disk",
+      "ranked": [
+        "disk"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "로그 누적 볼륨 확장",
+      "expected": "disk",
+      "ranked": [
+        "disk",
+        "log",
+        "memory"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "네트워크 연결 단절",
+      "expected": "network",
+      "ranked": [
+        "network"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "수집 신호 없음",
+      "expected": "network",
+      "ranked": [
+        "network",
+        "log"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "DNS TLS timeout",
+      "expected": "network",
+      "ranked": [
+        "network"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "ERROR 시스템 로그 오류",
+      "expected": "log",
+      "ranked": [
+        "log",
+        "disk",
+        "memory"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "FATAL 예외 로그",
+      "expected": "log",
+      "ranked": [
+        "log",
+        "disk",
+        "memory"
+      ],
+      "top1": true,
+      "recall3": true
+    },
+    {
+      "query": "로그 오류 배포 버전",
+      "expected": "log",
+      "ranked": [
+        "log",
+        "memory",
+        "disk"
+      ],
+      "top1": true,
+      "recall3": true
+    }
+  ],
+  "top1": 0.9333333333333333,
+  "recall_at_3": 1,
+  "unrelated_abstention": true,
+  "model_quality": {
+    "measured": false,
+    "reason": "실제 Ollama 모델 응답 품질은 별도 실행 및 사람 검토 필요"
+  }
+}

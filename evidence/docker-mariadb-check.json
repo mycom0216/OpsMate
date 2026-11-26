@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-26T05:57:05.510Z",
+  "database": "mariadb from 11.4.13-MariaDB, client 15.2 for debian-linux-gnu (x86_64) using  EditLine wrapper",
+  "checks": [
+    "로그인 세션",
+    "서버 생성 및 토큰",
+    "지표와 로그 저장",
+    "장애 자동 감지",
+    "분석 저장",
+    "해결과 처리 이력",
+    "로그 검색",
+    "운영 보고서",
+    "감사 기록"
+  ],
+  "container_node": "v24.22.3",
+  "passed": 9,
+  "host_port_reachable": false,
+  "scope": "독립 opsmate-verify 프로젝트의 실제 Docker 앱 내부 HTTP 및 MariaDB API 왕복. Windows 호스트 공개 포트 접근 결과는 별도.",
+  "note": "이 환경의 Windows 127.0.0.1:3102 접속은 확인하지 못함. 컨테이너 내부 검증만 통과."
+}

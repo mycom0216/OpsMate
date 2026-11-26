@@ -1,0 +1,243 @@
+{
+  "ooxml": [
+    {
+      "file": "개발일정표.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "데이터정의서.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "순서도.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "요구사항명세서.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "요구사항분석서.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "테스트결과서.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "포트폴리오.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "프로젝트결과보고서.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "프로젝트기획서.docx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "최종발표자료.pptx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A0%95%ED%91%9C.xlsx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    },
+    {
+      "file": "개발일정표.xlsx",
+      "crc_ok": true,
+      "xml_ok": true,
+      "missing_relationships": []
+    }
+  ],
+  "pdf": [
+    {
+      "file": "ERD.pdf",
+      "pages": 1,
+      "bytes": 83485,
+      "text_chars": [
+        0
+      ],
+      "rendered": 1
+    },
+    {
+      "file": "개발일정표.pdf",
+      "pages": 3,
+      "bytes": 285597,
+      "text_chars": [
+        479,
+        261,
+        298
+      ],
+      "rendered": 3
+    },
+    {
+      "file": "데이터정의서.pdf",
+      "pages": 11,
+      "bytes": 352027,
+      "text_chars": [
+        486,
+        174,
+        156,
+        290,
+        347,
+        244,
+        481,
+        269,
+        260,
+        207,
+        332
+      ],
+      "rendered": 11
+    },
+    {
+      "file": "순서도.pdf",
+      "pages": 2,
+      "bytes": 323369,
+      "text_chars": [
+        435,
+        201
+      ],
+      "rendered": 2
+    },
+    {
+      "file": "시스템아키텍처.pdf",
+      "pages": 1,
+      "bytes": 100847,
+      "text_chars": [
+        0
+      ],
+      "rendered": 1
+    },
+    {
+      "file": "요구사항명세서.pdf",
+      "pages": 4,
+      "bytes": 316196,
+      "text_chars": [
+        1027,
+        363,
+        361,
+        501
+      ],
+      "rendered": 4
+    },
+    {
+      "file": "요구사항분석서.pdf",
+      "pages": 3,
+      "bytes": 298695,
+      "text_chars": [
+        401,
+        323,
+        789
+      ],
+      "rendered": 3
+    },
+    {
+      "file": "최종발표자료.pdf",
+      "pages": 15,
+      "bytes": 540566,
+      "text_chars": [
+        99,
+        177,
+        49,
+        192,
+        52,
+        197,
+        49,
+        49,
+        198,
+        170,
+        54,
+        238,
+        201,
+        193,
+        141
+      ],
+      "rendered": 15
+    },
+    {
+      "file": "테스트결과서.pdf",
+      "pages": 3,
+      "bytes": 420406,
+      "text_chars": [
+        936,
+        204,
+        268
+      ],
+      "rendered": 3
+    },
+    {
+      "file": "포트폴리오.pdf",
+      "pages": 3,
+      "bytes": 467621,
+      "text_chars": [
+        491,
+        100,
+        508
+      ],
+      "rendered": 3
+    },
+    {
+      "file": "프로젝트결과보고서.pdf",
+      "pages": 2,
+      "bytes": 295273,
+      "text_chars": [
+        653,
+        815
+      ],
+      "rendered": 2
+    },
+    {
+      "file": "프로젝트기획서.pdf",
+      "pages": 3,
+      "bytes": 358612,
+      "text_chars": [
+        347,
+        234,
+        409
+      ],
+      "rendered": 3
+    }
+  ],
+  "slides": {
+    "count": 15,
+    "outside_canvas": [],
+    "speaker_notes": 15
+  },
+  "demo_db": {
+    "integrity": "ok",
+    "counts": {
+      "users": 0,
+      "sessions": 0,
+      "metrics": 24,
+      "servers": 1
+    },
+    "metric_sources": [
+      "demo"
+    ]
+  },
+  "issues": []
+}

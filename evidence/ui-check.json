@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-26T05:53:42.140Z",
+  "browser": "Chrome headless",
+  "screenshots": 6,
+  "page_errors": [],
+  "mobile_horizontal_overflow": false,
+  "login": true,
+  "dashboard": true,
+  "incident_source_only": true,
+  "logs": true,
+  "admin": true
+}

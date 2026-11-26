@@ -1,0 +1,26 @@
+{
+  "name": "opsmate",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI 기반 IT 인프라 관제 및 장애 대응 포트폴리오",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "init": "node --env-file-if-exists=.env scripts/init.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
+    "evaluate": "node scripts/evaluate.js",
+    "agent": "node --env-file-if-exists=.env scripts/agent.js",
+    "format": "prettier --write src scripts test public deploy/*.js package.json compose.yaml .github/workflows/ci.yml",
+    "format:check": "prettier --check src scripts test public deploy/*.js package.json compose.yaml .github/workflows/ci.yml"
+  },
+  "dependencies": {
+    "mariadb": "3.5.5",
+    "ws": "8.23.0"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
+  }
+}
