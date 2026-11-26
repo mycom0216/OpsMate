@@ -89,7 +89,7 @@ export function updateDeveloperWorkbench(data, transport) {
   const row = document.createElement('div');
   row.className = 'trace-line';
   const entries = [
-    ['trace-time', new Date().toLocaleTimeString('ko-KR', { hour12: false })],
+    ['trace-time', new Date().toLocaleTimeString('en-GB', { hour12: false })],
     ['trace-method', transport],
     ['trace-route', transport === 'WS' ? '/ws → snapshot' : 'GET /api/snapshot'],
     [
