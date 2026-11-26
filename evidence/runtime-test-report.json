@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-11-26T06:54:20.1429266Z",
+  "runtime": "Node.js v24.22.3",
+  "automated_tests": {
+    "failed": 0,
+    "passed": 28
+  },
+  "browser": {
+    "horizontal_overflow": false,
+    "websocket": true,
+    "widths": [
+      390,
+      768,
+      1024,
+      1440
+    ],
+    "javascript_errors": 0,
+    "code_copy": true,
+    "main_screens_passed": true,
+    "read_only_request": true
+  },
+  "rag": {
+    "unrelated_abstention": true,
+    "top1_miss": "CPU 사용률이 높아요",
+    "scope": "자체 작성 15개 질의와 5개 매뉴얼",
+    "total": 15,
+    "top1_correct": 14,
+    "recall_at_3_correct": 15
+  },
+  "live_ai": {
+    "model": "kanana2:3b",
+    "expected_sources_correct": 3,
+    "scope": "응답 계약과 기대 문서 인용 검사. 실제 장애 원인 정확도 평가 아님.",
+    "total": 3,
+    "model_answers": 3,
+    "ui_passed": true,
+    "embedding": "embeddinggemma:latest"
+  },
+  "agent": {
+    "fix": "node:url의 fileURLToPath 사용",
+    "initial_pass": false,
+    "real_metrics_received": true,
+    "test_server_disabled": true,
+    "test_log_received": true,
+    "retest_passed": true,
+    "initial_error": "검증 스크립트가 file URL의 한글 경로를 디코딩하지 않아 파일 로그 미수신"
+  },
+  "not_rerun": [
+    "Docker/MariaDB",
+    "장시간 부하",
+    "원격 TLS",
+    "문서 렌더링"
+  ]
+}

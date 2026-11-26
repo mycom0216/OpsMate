@@ -6,6 +6,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 const credentials = JSON.parse(await readFile('data/bootstrap.json', 'utf8'));
 const base = 'http://127.0.0.1:3100';
 const login = await fetch(base + '/api/login', {
@@ -36,7 +37,8 @@ const child = spawn(process.execPath, ['scripts/agent.js'], {
     ...process.env,
     OPSMATE_URL: base,
     AGENT_TOKEN: registered.agentToken,
-    AGENT_LOG_PATH: logPath.pathname.replace(/^\/(\w:)/, '$1'),
+    // 한글·공백과 Windows 드라이브 문자를 포함한 file URL은 표준 API로 변환합니다.
+    AGENT_LOG_PATH: fileURLToPath(logPath),
   },
   windowsHide: true,
   stdio: ['ignore', 'pipe', 'pipe'],
