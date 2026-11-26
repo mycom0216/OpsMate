@@ -1,3 +1,8 @@
+/*
+ * 기본 레이아웃과 공통 UI 부품을 정의합니다.
+ * 로드 순서는 styles.css → theme.css → developer.css이며 뒤 파일이 같은 선택자의 표현을 덮습니다.
+ * [hidden]은 CSS 배치와 관계없이 비활성 화면을 숨깁니다. 동작 제어는 app.js가 담당합니다.
+ */
 /* 관제 화면의 색상, 반응형 레이아웃 및 키보드 포커스를 정의합니다. */
 :root {
   --bg: #f3f6fa;
@@ -96,6 +101,7 @@ p {
   vertical-align: super;
   margin-left: 5px;
 }
+/* 사이드바와 메뉴 선택 상태. 화면 이동 기능은 HTML의 data-tab과 app.js 이벤트가 담당합니다. */
 .sidebar {
   position: fixed;
   inset: 0 auto 0 0;
@@ -179,6 +185,7 @@ header h1 {
   color: #657484;
   background: #e9edf2;
 }
+/* 실제/가상 서버와 장애 통계의 카드 배치. 표시 숫자는 서버 응답에서 계산합니다. */
 .summary {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -496,6 +503,7 @@ footer {
     gap: 8px;
   }
 }
+/* 작은 화면에서 열 수·여백·글자 크기를 조정합니다. 서버 표와 코드의 긴 내용은 자체 스크롤을 유지합니다. */
 @media (max-width: 700px) {
   .sidebar {
     position: static;

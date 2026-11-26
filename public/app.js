@@ -1,6 +1,18 @@
+/**
+ * 브라우저 관제 화면의 상태, HTTP API, WebSocket과 사용자 이벤트를 연결합니다.
+ * 화면 흐름: enter → refresh/renderSnapshot → connect → 필요한 화면의 별도 조회.
+ * 응답 문자열은 textContent로 표시하고, 화면에서 버튼을 숨기는 것과 별개로 서버도 RBAC를 검사합니다.
+ * 개발자 코드 패널은 developer.js가 담당하며 수신 스냅샷만 전달합니다.
+ */
 import { initializeDeveloperWorkbench, updateDeveloperWorkbench } from './developer.js';
 /** API 응답은 textContent/텍스트 노드로만 표시하여 저장된 로그의 HTML 실행을 막습니다. */
+/**
+ * 반복해서 쓰는 id 기반 DOM 조회를 짧게 표현하는 도우미입니다.
+ */
 const $ = (id) => document.getElementById(id);
+/**
+ * 이 탭의 로그인 사용자·최신 스냅샷·연결·선택 화면을 보관합니다. DB의 원본 상태를 대신하지 않습니다.
+ */
 let user = null,
   snapshot = null,
   ws = null,
@@ -17,21 +29,47 @@ const titles = {
   report: '운영 보고서',
   admin: '계정 및 감사',
 };
+/**
+ * 저장된 출처 코드를 화면의 실제 호스트/실제 에이전트/가상 데모 라벨로 바꿉니다.
+ */
 const source = (s) =>
   s === 'demo' ? '가상 데모' : s === 'local' ? '실제 호스트' : '실제 에이전트';
+/**
+ * 장애 상태 코드를 사용자가 읽는 접수/확인/해결 라벨로 바꿉니다.
+ */
 const status = (s) => ({ open: '접수', acknowledged: '확인', resolved: '해결' })[s] || s;
+/**
+ * DB의 UTC 시각을 브라우저의 현지 시각으로 보여 줍니다. 값이 없으면 미수집으로 표시합니다.
+ */
 const stamp = (s) => (s ? new Date(s).toLocaleString('ko-KR') : '미수집');
+/**
+ * 측정된 0%와 미수집 null을 구분하고, 수치는 소수점 한 자리로 표시합니다.
+ */
 const pct = (v) => (v == null ? '미수집' : `${Number(v).toFixed(1)}%`);
+/**
+ * DOM 요소를 만들고 텍스트를 안전하게 넣는 공통 도우미입니다.
+ * 서버명·로그·AI 답변 등을 innerHTML로 넣지 않아 문자열이 HTML로 실행되지 않게 합니다.
+ */
 const el = (tag, text, cls) => {
   const n = document.createElement(tag);
   if (text !== undefined) n.textContent = text;
   if (cls) n.className = cls;
   return n;
 };
+/**
+ * 페이지 상단에 작업 결과 또는 오류를 텍스트로 표시합니다.
+ */
 function notice(message) {
   $('notice').textContent = message;
   $('notice').hidden = false;
 }
+/**
+ * 같은 출처의 /api 경로에 JSON 요청을 보내고 비정상 HTTP 응답을 예외로 바꿉니다.
+ * 401이면 기존 로그인 화면 상태와 연결 재시도 타이머를 정리해 로그인을 다시 받습니다.
+ * @param {string} path /snapshot 등 /api 뒤의 경로
+ * @param {Object} options fetch 메서드·헤더·본문 옵션
+ * @returns {Promise<Object|Array>} 파싱된 API 응답
+ */
 async function api(path, options = {}) {
   const res = await fetch('/api' + path, {
     ...options,
@@ -50,10 +88,20 @@ async function api(path, options = {}) {
   }
   return data;
 }
+/**
+ * POST 요청의 본문을 JSON으로 직렬화해 api에 전달합니다. 인증 쿠키는 브라우저가 관리합니다.
+ */
 const post = (path, data = {}) => api(path, { method: 'POST', body: JSON.stringify(data) });
+/**
+ * 출처나 상태를 나타내는 텍스트 배지를 만듭니다. 색은 CSS의 상태 클래스로 결정합니다.
+ */
 function pill(text, kind = '') {
   return el('span', text, `pill ${kind}`);
 }
+/**
+ * 헤더와 행 배열을 표로 그립니다. DOM 요소는 그대로, 일반 값은 텍스트 노드로 넣습니다.
+ * 행이 없으면 빈 표 대신 안내 행을 만들어 수집 대기와 렌더 오류를 구분할 수 있게 합니다.
+ */
 function table(target, headers, rows) {
   const wrap = el('div', undefined, 'table-wrap'),
     t = el('table'),
@@ -83,6 +131,10 @@ function table(target, headers, rows) {
   wrap.append(t);
   target.replaceChildren(wrap);
 }
+/**
+ * 비동기 작업 버튼을 만들고 실행 중에는 중복 클릭을 막습니다.
+ * 오류는 공통 안내에 표시하며 finally에서 성공 여부와 관계없이 버튼을 다시 활성화합니다.
+ */
 function action(label, fn, cls = '') {
   const b = el('button', label, cls);
   b.onclick = async () => {
@@ -97,6 +149,9 @@ function action(label, fn, cls = '') {
   };
   return b;
 }
+/**
+ * 장애 객체를 공통 표의 열 배열로 바꾸고 상세 조회 버튼에 해당 장애 ID를 연결합니다.
+ */
 function incidentRows(items) {
   return items.map((i) => [
     el('span', '#' + String(i.id).padStart(3, '0'), 'incident-id'),
@@ -109,6 +164,9 @@ function incidentRows(items) {
   ]);
 }
 // 고정된 SVG 아이콘은 외부 이미지나 폰트 의존성 없이 상태 정보를 보조합니다.
+/**
+ * 정해 둔 SVG 경로만 사용해 아이콘을 그립니다. 사용자 문자열을 SVG 마크업으로 해석하지 않습니다.
+ */
 function icon(name) {
   const paths = {
     dashboard: ['M3 3h7v7H3z', 'M14 3h7v7h-7z', 'M3 14h7v7H3z', 'M14 14h7v7h-7z'],
@@ -150,6 +208,12 @@ function icon(name) {
   }
   return n;
 }
+/**
+ * 한 번 받은 스냅샷으로 통계·서버 카드·장애 표·차트 선택값을 함께 갱신합니다.
+ * 실제/가상 건수는 source로 나누며 비활성 서버도 등록 목록에는 남겨 표시합니다.
+ * @param {Object} data /api/snapshot 또는 WebSocket snapshot의 본문
+ * @param {string} transport HTTP 또는 WS. 개발자 이벤트 스트림의 실제 수신 구분입니다.
+ */
 function renderSnapshot(data, transport = 'HTTP') {
   snapshot = data;
   updateDeveloperWorkbench(data, transport);
@@ -331,10 +395,18 @@ function renderSnapshot(data, transport = 'HTTP') {
   if (data.servers.some((s) => String(s.id) === selected)) $('chartServer').value = selected;
   void drawChart().catch((e) => notice(e.message));
 }
+/**
+ * 선택한 서버의 최신 120개 지표를 받아 SVG 차트와 포인터 툴팁을 그립니다.
+ * 표시 폭은 달라도 viewBox 좌표로 변환해 같은 샘플을 가리키게 합니다.
+ * 미수집 구간은 선을 끊고, 샘플 한 개는 점으로 표시해 없는 추세를 만들지 않습니다.
+ */
 async function drawChart() {
   if (!$('chartServer').value) return;
   const selected = $('chartServer').value,
     rows = await api('/metrics?serverId=' + selected);
+  /**
+   * 응답이 오는 동안 사용자가 다른 서버를 골랐다면 오래된 요청으로 새 선택을 덮지 않습니다.
+   */
   if ($('chartServer').value !== selected) return;
   const svg = $('chart'),
     ns = 'http://www.w3.org/2000/svg';
@@ -385,6 +457,9 @@ async function drawChart() {
     ['cpu', '#51ddc5'],
   ]) {
     let segment = [];
+    /**
+     * 연속해서 측정된 한 구간만 채우고 선을 그립니다. null을 만날 때 구간을 끝내는 데 사용합니다.
+     */
     const paint = () => {
       if (!segment.length) return;
       const pts = segment.map((p) => p.join(',')).join(' ');
@@ -447,6 +522,10 @@ async function drawChart() {
   });
   svg.append(guide);
   const tooltip = $('chartTooltip');
+  /**
+   * 실제 화면의 포인터 위치를 760폭의 차트 좌표로 변환한 뒤 가장 가까운 샘플을 선택합니다.
+   * 양끝 범위를 제한하고 툴팁이 패널 바깥으로 밀려나지 않게 위치를 보정합니다.
+   */
   svg.onpointermove = (e) => {
     if (!rows.length) return;
     const rect = svg.getBoundingClientRect(),
@@ -470,9 +549,16 @@ async function drawChart() {
     guide.setAttribute('visibility', 'hidden');
   };
 }
+/**
+ * 최신 스냅샷을 HTTP로 다시 읽습니다. 새로고침 버튼과 개발자 GET 확인 버튼이 함께 사용합니다.
+ */
 async function refresh() {
   renderSnapshot(await api('/snapshot'));
 }
+/**
+ * 선택한 장애의 현재 상태, 분석 이력, 처리 이벤트를 각각 조회해 상세 패널을 구성합니다.
+ * 조회자는 읽기만 가능하고 운영자·관리자에게만 분석 및 상태 변경 입력을 제공합니다.
+ */
 async function showIncident(id) {
   selectedIncident = id;
   await switchTab('incidents');
@@ -543,6 +629,9 @@ async function showIncident(id) {
   );
   d.append(eventView);
 }
+/**
+ * 검색 폼의 문자열과 선택 레벨을 URLSearchParams로 인코딩해 최신 로그를 조회합니다.
+ */
 async function loadLogs() {
   const params = new URLSearchParams(new FormData($('logForm')));
   const rows = await api('/logs?' + params);
@@ -558,6 +647,10 @@ async function loadLogs() {
     ]),
   );
 }
+/**
+ * 관리자 전용 사용자 목록·역할 변경 선택 상자·감사 기록을 불러옵니다.
+ * 자기 역할 변경은 화면에서도 막지만 최종 권한 검사는 서버 API가 담당합니다.
+ */
 async function loadAdmin() {
   const users = await api('/users');
   table(
@@ -594,6 +687,10 @@ async function loadAdmin() {
     rows.map((a) => [stamp(a.created_at), a.actor, a.action, a.detail]),
   );
 }
+/**
+ * 표시할 화면과 메뉴 선택 상태를 바꾸고 그 화면에 필요한 API만 추가 조회합니다.
+ * 관리 화면으로 이동하려는 비관리자는 진입하지 않습니다.
+ */
 async function switchTab(tab) {
   if (tab === 'admin' && user.role !== 'admin') return;
   currentTab = tab;
@@ -628,6 +725,11 @@ async function switchTab(tab) {
     $('reportContent').textContent = JSON.stringify(report, null, 2);
   }
 }
+/**
+ * 같은 출처의 인증 WebSocket을 연결하고 snapshot 메시지만 관제 갱신에 사용합니다.
+ * 연결이 끊기면 3초 후 세션 유효성을 먼저 확인하고 재접속합니다.
+ * 로그아웃 후에는 user가 null이므로 재연결을 예약하지 않습니다.
+ */
 function connect() {
   ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws`);
   ws.onopen = () => {
@@ -654,6 +756,10 @@ function connect() {
     }
   };
 }
+/**
+ * 인증된 사용자 정보를 적용한 뒤 초기 스냅샷을 읽고 WebSocket을 연결합니다.
+ * 초기 데이터가 그려진 후에 실시간 메시지가 도착하도록 순서를 유지합니다.
+ */
 async function enter(u) {
   user = u;
   $('loginView').hidden = true;
@@ -666,6 +772,10 @@ async function enter(u) {
   await switchTab('dashboard');
   connect();
 }
+/**
+ * 로그인 이벤트: 폼 기본 이동을 막고 API 응답으로 화면을 전환합니다.
+ * 성공하면 비밀번호 입력을 비우고, 요청 중에는 제출 버튼을 비활성화합니다.
+ */
 $('loginForm').onsubmit = async (e) => {
   e.preventDefault();
   const b = e.submitter;
@@ -680,6 +790,9 @@ $('loginForm').onsubmit = async (e) => {
     b.disabled = false;
   }
 };
+/**
+ * 로그아웃 API 처리 후 사용자·연결·재시도 타이머를 정리하고 로그인 화면을 표시합니다.
+ */
 $('logout').onclick = async () => {
   try {
     await post('/logout');
@@ -700,6 +813,10 @@ $('logForm').onsubmit = (e) => {
   e.preventDefault();
   void loadLogs().catch((err) => notice(err.message));
 };
+/**
+ * 관리자 서버 등록: 한 번 발급되는 토큰을 등록 결과 영역에만 보여 줍니다.
+ * 이 토큰을 화면 캡처·보고서·Git에 포함하지 않도록 관리해야 합니다.
+ */
 $('serverForm').onsubmit = async (e) => {
   e.preventDefault();
   try {
@@ -713,6 +830,9 @@ $('serverForm').onsubmit = async (e) => {
     notice(err.message);
   }
 };
+/**
+ * 관리자 계정 생성: 폼의 값은 API로 검증하며 생성 후 비밀번호 입력을 포함한 폼을 비웁니다.
+ */
 $('userForm').onsubmit = async (e) => {
   e.preventDefault();
   try {
@@ -723,6 +843,10 @@ $('userForm').onsubmit = async (e) => {
     notice(err.message);
   }
 };
+/**
+ * 읽어 둔 운영 보고서 JSON을 브라우저 Blob으로 내려받습니다.
+ * 서버에 임시 파일을 만들지 않으며 사용한 객체 URL은 잠시 뒤 해제합니다.
+ */
 $('downloadReport').onclick = () => {
   if (!report) return;
   const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }),
@@ -748,6 +872,10 @@ $('refreshDashboard').onclick = async () => {
     b.disabled = false;
   }
 };
+/**
+ * 필요한 DOM이 준비된 뒤 코드 패널의 이벤트를 연결합니다.
+ * refresh 함수를 주입하므로 코드 문자열을 eval하거나 에이전트 예시를 자동 실행하지 않습니다.
+ */
 initializeDeveloperWorkbench({ refresh, onError: notice });
 try {
   await enter(await api('/me'));

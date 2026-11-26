@@ -2,11 +2,13 @@
 services:
   opsmate:
     build: .
+    # 호스트의 루프백 주소만 공개하여 기본 데모가 외부 네트워크에 바로 노출되지 않게 합니다.
     ports: ['127.0.0.1:3100:3100']
     environment:
       DEMO_MODE: 'true'
       AI_ENABLED: 'false'
       OLLAMA_URL: 'http://host.docker.internal:11434'
+    # 컨테이너 교체 후에도 실행 DB와 초기 계정 정보가 남도록 별도 데이터 볼륨을 사용합니다.
     volumes: ['opsmate-data:/app/data']
     restart: unless-stopped
 volumes:

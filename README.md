@@ -102,6 +102,23 @@ npm audit --omit=dev
 
 최종 로컬 자동 테스트는 28개 통과, 실제 에이전트 지표·파일 로그 수집과 SQLite 템플릿 초기화·백업을 검증했습니다. 전용 Docker 앱 내부 HTTP와 MariaDB 11.4의 통합 검사 9개도 통과했습니다. 이 환경에서 Windows 호스트의 Docker 공개 포트 접속은 확인하지 못했습니다. 로컬 Node 실행 화면과 컨테이너 내부 검증을 구분합니다. 자세한 원본은 `evidence/docker-mariadb-check.json`에 있습니다.
 
+## 코드를 읽는 순서
+
+각 파일의 맨 위에는 역할과 처리 순서를, 주요 함수 앞에는 목적·입력·반환값·예외 또는 설계 이유를 한국어로 설명했습니다. `@param`과 `@returns`는 편집기에서 함수 사용법을 볼 때도 참고할 수 있습니다.
+
+| 순서 | 파일 | 확인할 내용 |
+| --- | --- | --- |
+| 1 | [scripts/init.js](scripts/init.js) | 최초 실행에서 무엇을 만들고 무엇을 보존하는지 |
+| 2 | [src/db.js](src/db.js), [src/seed.js](src/seed.js) | DB 인터페이스와 초기 계정·서버 생성 |
+| 3 | [src/security.js](src/security.js) | 비밀번호 해시, 토큰 해시, 세션 쿠키의 차이 |
+| 4 | [src/telemetry.js](src/telemetry.js), [scripts/agent.js](scripts/agent.js) | 실제 지표 단위, 이전 측정값, 미수집 null, 로그 전송 한계 |
+| 5 | [src/incidents.js](src/incidents.js) | 임계치 분류와 미해결 장애 중복 억제 |
+| 6 | [src/rag.js](src/rag.js) | BM25·임베딩·RRF와 원인 후보/인용 검증, 실패 대체 경로 |
+| 7 | [src/server.js](src/server.js) | API별 인증·권한·입력 검사, WebSocket과 수집 루프 |
+| 8 | [public/app.js](public/app.js), [public/developer.js](public/developer.js) | 화면 갱신, 안전한 텍스트 출력, 실제 JSON·코드 탭 |
+
+`test`는 동작을 어떻게 검증하는지, `tools`는 실행 화면과 제출물을 어떻게 만들고 검사하는지 읽는 영역입니다. Docker와 CI 설정에도 실행 범위와 각 단계의 이유를 적었습니다. 주석만 바뀌었는지는 `evidence/comment-review.json`의 실행 구문 동일성 검사 결과에서 확인할 수 있습니다.
+
 ## 기술 근거
 
 - [Node.js 24 SQLite 공식 문서](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html)

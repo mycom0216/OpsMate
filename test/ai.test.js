@@ -1,8 +1,16 @@
-/** 실제 모델 품질과 분리하여 Ollama HTTP 계약 및 실패 시 대체 동작을 검사합니다. */
+/**
+ * Ollama와 같은 HTTP 형태의 모의 서버로 정상 계약·허위 인용·근거 없는 조치·통신 실패를 검사합니다.
+ * 실제 모델을 호출하지 않으므로 이 테스트 통과를 모델 답변의 의미 정확도로 해석하면 안 됩니다.
+ * 실제 모델 호출 기록은 scripts/evaluate-live.js가 별도로 남깁니다.
+ */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { analyze, loadManuals } from '../src/rag.js';
+/**
+ * OS가 선택한 빈 포트에 모의 Ollama 서버를 띄우고 work에 주소를 전달합니다.
+ * 검사 중 오류가 나도 finally에서 서버를 닫아 다음 검사에 연결이 남지 않게 합니다.
+ */
 async function mock(fn, work) {
   const server = http.createServer(fn);
   await new Promise((r) => server.listen(0, '127.0.0.1', r));

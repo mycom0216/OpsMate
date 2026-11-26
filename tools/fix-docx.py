@@ -1,3 +1,5 @@
+# 기존 DOCX의 내용은 유지하고 확대율 속성과 pBdr 요소 순서만 스키마에 맞춥니다.
+# 문서 안의 문장·이미지를 새로 만들지 않습니다. 수정 뒤에는 Office 렌더와 스키마 검사를 다시 해야 합니다.
 """Word가 열 수 있는 문서도 엄격한 OOXML 스키마에 맞게 정규화합니다."""
 from pathlib import Path
 import sys

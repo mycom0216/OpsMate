@@ -1,3 +1,6 @@
+# 제출 파일의 ZIP CRC·XML·관계 경로, PDF 전 페이지 렌더, 슬라이드 경계와 데모 DB를 검사합니다.
+# 이 검사는 눈으로 잘림·겹침을 읽는 검토를 대체하지 않습니다. PNG를 열어 시각 검토도 해야 합니다.
+# 최종 파일은 docs, 내부 검토 PNG는 evidence/rendered, 검사 JSON은 artifact-check.json에 저장합니다.
 """OOXML ZIP/XML/관계, PDF 무결성 및 도형 경계를 검사하고 전 페이지 PNG를 만듭니다."""
 from pathlib import Path
 import json,zipfile,posixpath,xml.etree.ElementTree as ET,sqlite3

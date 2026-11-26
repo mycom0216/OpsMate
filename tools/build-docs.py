@@ -1,3 +1,6 @@
+# 검증 JSON과 공개 데모 스키마를 읽어 동일 원본의 MD/DOCX를 만드는 제출물 제작 도구입니다.
+# 문서 본문 데이터 정의 → 도식 생성 → 문서별 내용 → render_doc 형식 적용 순서로 읽습니다.
+# Office PDF 변환과 PNG 검토는 별도 단계입니다. 문서가 만들어졌다고 배치 검사까지 끝난 것은 아닙니다.
 """검증 증빙과 실제 SQLite 스키마로 한국어 MD 및 편집 가능한 DOCX를 생성합니다."""
 from pathlib import Path
 import sys
@@ -13,6 +16,7 @@ OUT=ROOT/'docs'; OUT.mkdir(exist_ok=True)
 FONT='C:/Windows/Fonts/malgun.ttf'
 TEAL='#087f8c'; INK='#162b42'
 
+# 정해진 캔버스 안에 노드·연결선·라벨을 그립니다. 선을 먼저 그려 본문 상자를 가리지 않게 합니다.
 def diagram(name,title,boxes,edges,footer,size=(1800,1100)):
     """레이아웃을 고정한 PNG 도식을 그립니다. 선은 노드보다 먼저 그립니다."""
     img=Image.new('RGB',size,'#f6f9fc'); d=ImageDraw.Draw(img)
@@ -67,7 +71,9 @@ live=json.loads((ROOT/'evidence/ai-live-evaluation.json').read_text('utf-8')) if
 ui=json.loads((ROOT/'evidence/ui-check.json').read_text('utf-8'))
 release=json.loads((ROOT/'evidence/release-status.json').read_text('utf-8')) if (ROOT/'evidence/release-status.json').exists() else {}
 docs={}
+# 제목·문단·표·이미지 경로를 공통 구조로 묶습니다. 아직 파일을 쓰거나 변환하지 않습니다.
 def section(title,paragraphs=(),table=None,image=None):return {'title':title,'paragraphs':list(paragraphs),'table':table,'image':image}
+# 문서명을 키로 본문 원본을 등록합니다. 같은 원본으로 MD와 DOCX를 출력합니다.
 def doc(name,intro,sections):docs[name]={'intro':intro,'sections':sections}
 reqs=[
  ['FR01','인증 및 권한','로그인·세션·계정·역할·감사','admin / operator / viewer'],
@@ -148,6 +154,8 @@ doc('프로젝트결과보고서','OpsMate의 실행 가능한 로컬 관제 시
  section('배포 및 제출 상태',[f"원격 저장소 상태: {release.get('github','최종 검증 단계에서 별도 기록')}.",f"Docker 실기동: {release.get('docker','데몬이 실행되지 않아 미검증')}.",f"MariaDB 실기동: {release.get('mariadb','전용 서비스 연결 미구성으로 미검증')}.",'최종 ZIP과 Git에는 자격 증명, 실행 DB, .env, node_modules를 포함하지 않는다. 초기화 스크립트는 사용자 환경에서 새 비밀번호를 생성한다. 공개 데모 DB는 가상 지표만 포함하고 계정·토큰·세션은 비워 둔다.']),
  section('미완료 및 후속 검증',['독립 장애 데이터의 검색·원인 정확도, 대규모 동시 접속 및 장시간 안정성, 원격 TLS 프록시, 운영 백업 복구 훈련은 완료하지 않았다. Redis와 분산 세션, 원격 자동 복구는 구현 범위 밖이다.','Docker 앱과 MariaDB의 내부 통합 검사는 통과했지만 Windows 호스트 공개 포트 접속은 확인하지 못했다. 이 환경에서는 로컬 Node 실행으로 브라우저 관제를 검증했다.','실제 모델은 매뉴얼의 등록된 후보만 선택하지만 그 후보가 실제 장애의 원인인지 추가 확인해야 한다. 모델 계약 통과율을 AI 정확도로 표시하지 않는다.','에이전트는 단순 파일 tail 방식이므로 전송 실패·로테이션·UTF-8 경계에서 손실 가능성이 있다. 운영 전 재전송 큐와 로그 처리 검증을 보완해야 한다.'])])
 
+# A4 본문 폭·스타일·표·반복 머리행·페이지 시작을 적용해 실제 MD/DOCX를 저장합니다.
+# Word 스타일의 확대율 필수 속성과 테두리 요소 순서도 지정하여 스키마 검사를 통과하게 합니다.
 def render_doc(name,data):
     """동일 원본으로 MD와 DOCX를 만들고 페이지별로 내용이 분리되게 합니다."""
     md=[f'# OpsMate {name}','',data['intro'],'']

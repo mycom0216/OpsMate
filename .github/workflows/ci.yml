@@ -1,5 +1,7 @@
 name: OpsMate 검증
+# 푸시 또는 PR마다 실행합니다. 실제 로컬 Ollama나 운영 DB가 필요한 검사는 포함하지 않습니다.
 on: [push, pull_request]
+# 자동 검사에 필요한 저장소 읽기 권한만 부여합니다.
 permissions:
   contents: read
 jobs:
@@ -11,10 +13,12 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+      # 잠금 파일 설치 후 형식 검사, 격리 자동 테스트, 오프라인 검색 평가를 순서대로 실행합니다.
       - run: npm ci --ignore-scripts
       - run: npm run format:check
       - run: npm test
       - run: npm run evaluate
+      # 검색 평가 JSON을 증빙으로 보존합니다. 생성 모델의 정답률 자료로 해석하지 않습니다.
       - uses: actions/upload-artifact@v4
         with:
           name: evaluation

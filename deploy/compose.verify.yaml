@@ -1,5 +1,6 @@
 # 기존 프로젝트와 분리한 OpsMate 전용 Docker 및 MariaDB 통합 검증 환경입니다.
 services:
+  # 기존 프로젝트 DB와 분리한 검증 전용 MariaDB입니다. 비밀번호는 로컬 환경 파일에서 주입합니다.
   db:
     image: mariadb:11.4
     environment:
@@ -9,11 +10,13 @@ services:
       MARIADB_PASSWORD: ${VERIFY_DB_PASSWORD}
     volumes:
       - verify-db:/var/lib/mysql
+    # DB 초기화 완료를 기다려 앱이 준비되지 않은 DB에 접속하며 실패하는 일을 줄입니다.
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
       timeout: 5s
       retries: 25
+  # 같은 내부 네트워크의 db 서비스로 연결하고 depends_on으로 DB 준비를 기다립니다.
   opsmate:
     build:
       context: ..
@@ -29,6 +32,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+# 검증 전용 볼륨은 Compose 프로젝트 이름 아래에 생성되어 다른 프로젝트 볼륨과 분리됩니다.
 volumes:
   verify-db:
   verify-app:

@@ -1,4 +1,8 @@
-/** 격리된 메모리 DB에서 HTTP·RBAC·WebSocket·상태 전이·수집 검증을 통합 검사합니다. */
+/**
+ * 격리된 메모리 DB와 임의 포트의 실제 HTTP 서버로 인증·권한·수집·처리·WebSocket을 검사합니다.
+ * 테스트 간에는 이 파일에서 만든 앱/계정/서버를 공유하며 --test-concurrency=1로 순서를 유지합니다.
+ * before에서 준비하고 after에서 연결과 DB를 닫아 실행 중인 포트 3100 앱과 분리합니다.
+ */
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { WebSocket } from 'ws';
@@ -6,6 +10,10 @@ import { once } from 'node:events';
 import { createApp } from '../src/server.js';
 import { openDB } from '../src/db.js';
 let app, base, admin, operator, viewer, agentToken, agentId, incidentId;
+/**
+ * 테스트 HTTP 요청을 보내 상태·파싱된 본문·Set-Cookie의 세션 부분을 반환합니다.
+ * 로그인 테스트에서 받은 쿠키를 다음 요청에 명시적으로 넘겨 역할별 접근을 재현합니다.
+ */
 async function req(path, { cookie, method = 'GET', data, headers = {} } = {}) {
   const r = await fetch(base + path, {
     method,
@@ -19,6 +27,9 @@ async function req(path, { cookie, method = 'GET', data, headers = {} } = {}) {
   const payload = await r.json();
   return { status: r.status, body: payload, cookie: r.headers.get('set-cookie')?.split(';')[0] };
 }
+/**
+ * 각 역할의 무작위 초기 비밀번호로 실제 로그인을 수행하고 서로 다른 세션을 준비합니다.
+ */
 before(async () => {
   app = await createApp({
     db: await openDB({ path: ':memory:', driver: 'sqlite' }),
@@ -37,6 +48,9 @@ before(async () => {
     else viewer = r.cookie;
   }
 });
+/**
+ * 검사 종료 시 소켓·서버·메모리 DB를 정리하여 테스트 프로세스가 연결 때문에 남지 않게 합니다.
+ */
 after(async () => app.close());
 test('비인증 접근과 잘못된 로그인 차단', async () => {
   assert.equal((await req('/api/snapshot')).status, 401);

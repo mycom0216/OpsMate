@@ -1,4 +1,8 @@
-/** 경계값, 중복 감지, 암호 검증, 실제 수집 값의 형식을 검사합니다. */
+/**
+ * 외부 HTTP 없이 해시·임계치·중복 억제·검색·벡터와 실제 수집값 형식을 검사합니다.
+ * DB가 필요한 검사는 :memory: 저장소를 사용해 실행 DB를 변경하지 않습니다.
+ * 각 test의 이름은 검사하려는 동작입니다. 실제 수집 검사는 성능이나 정확도 벤치마크가 아닙니다.
+ */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { hashPassword, verifyPassword, digest } from '../src/security.js';

@@ -1,0 +1,220 @@
+{
+  "files": [
+    {
+      "file": "deploy/mariadb-smoke.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "public/app.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "public/developer.css",
+      "method": "CSS 주석 제거 후 정규화 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "public/developer.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "public/index.html",
+      "method": "HTML 주석 제거 후 정규화 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "public/styles.css",
+      "method": "CSS 주석 제거 후 정규화 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "public/theme.css",
+      "method": "CSS 주석 제거 후 정규화 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "scripts/agent.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "scripts/backup.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "scripts/demo-template.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "scripts/evaluate-live.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "scripts/evaluate.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "scripts/init.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/db.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/incidents.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/rag.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/security.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/seed.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/server.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "src/telemetry.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "test/ai.test.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "test/api.test.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "test/unit.test.js",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/agent-check.mjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/ai-screen.cjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/browser-check.cjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/build-slides.cjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/developer-ui-check.cjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/docker-api-check.mjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/docker-internal-check.mjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/schedule.mjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/template-check.mjs",
+      "method": "JavaScript AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "method": "주석 행 제외 실행 설정 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "Dockerfile",
+      "method": "주석 행 제외 실행 설정 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "compose.yaml",
+      "method": "주석 행 제외 실행 설정 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "deploy/compose.verify.yaml",
+      "method": "주석 행 제외 실행 설정 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/artifact-qa.py",
+      "method": "Python AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/build-docs.py",
+      "method": "Python AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/fix-docx.py",
+      "method": "Python AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "file": "tools/preview-assets.py",
+      "method": "Python AST 비교",
+      "executable_content_unchanged": true
+    },
+    {
+      "method": "PowerShell 비주석 토큰 비교",
+      "executable_content_unchanged": true,
+      "file": "tools/convert-office.ps1"
+    }
+  ],
+  "executable_content_unchanged": true,
+  "scope": "앱·스크립트·테스트·화면·문서 제작 도구·Docker·CI의 한국어 설명 보강",
+  "baseline": "97bf79ede2c87b420255a5cce8858037441e0075",
+  "checked_at": "2026-11-26T06:44:37.0478581Z",
+  "reviewed_source_files": 41,
+  "format_check": "통과",
+  "tests": {
+    "failed": 0,
+    "total": 28,
+    "passed": 28
+  }
+}

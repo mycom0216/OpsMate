@@ -1,6 +1,7 @@
 <!doctype html>
 <!-- 한국어 관제 화면입니다. 외부 CDN 없이 정적 파일만으로 동작합니다. -->
 <html lang="ko">
+  <!-- 화면에 필요한 정적 CSS와 모듈 JS만 같은 서버에서 읽습니다. 외부 CDN이나 인라인 실행 코드는 사용하지 않습니다. -->
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -11,6 +12,7 @@
     <script type="module" src="/app.js"></script>
   </head>
   <body>
+    <!-- 로그인 전 화면. form의 name 속성이 API 요청 필드와 연결되므로 이름을 바꾸면 app.js도 함께 확인합니다. -->
     <div id="loginView" class="login">
       <form id="loginForm" class="login-card">
         <span class="eyebrow">OPERATIONS INTELLIGENCE</span>
@@ -49,6 +51,7 @@
         </div>
       </aside>
     </div>
+    <!-- 인증 후 화면의 공통 뼈대. hidden을 전환하는 것은 화면 처리이며 실제 권한은 서버가 다시 검사합니다. -->
     <div id="console" hidden>
       <aside class="sidebar">
         <a class="brand" href="/"
@@ -97,6 +100,7 @@
         </header>
         <div id="notice" role="status" hidden></div>
         <section id="dashboard" class="page">
+          <!-- 코드 탭은 실제 서버 JSON과 연동 예시를 보여 줍니다. GET 버튼만 읽기 전용 조회를 수행합니다. -->
           <div class="developer-hero">
             <div class="hero-copy">
               <div class="hero-label">
@@ -192,6 +196,7 @@
             </div>
             <div id="serverCards" class="server-cards"></div>
           </article>
+          <!-- 이 브라우저가 받은 HTTP/WS 이벤트를 표시합니다. 기록 비우기는 DB 삭제가 아닙니다. -->
           <article class="terminal-panel">
             <div class="terminal-heading">
               <div>
@@ -224,6 +229,7 @@
             <div id="recentIncidents"></div>
           </article>
         </section>
+        <!-- 장애 목록과 선택 상세 패널. 상태 변경·분석 버튼은 역할에 따라 app.js가 구성합니다. -->
         <section id="incidents" class="page" hidden>
           <article class="panel">
             <div class="panel-title">
@@ -251,6 +257,7 @@
             <div id="logResults"></div>
           </article>
         </section>
+        <!-- 등록 폼은 관리자 화면입니다. 서버 토큰은 등록 응답에서 한 번만 표시됩니다. -->
         <section id="servers" class="page" hidden>
           <article class="panel">
             <h2>서버 목록</h2>

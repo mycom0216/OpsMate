@@ -1,3 +1,8 @@
+/*
+ * 실제 JSON·코드 예시·터미널을 시각적으로 묶는 최종 개발자 테마입니다.
+ * 코드 영역은 자체 스크롤을 사용하고 전체 문서 폭이 늘어나지 않도록 min-width:0을 적용합니다.
+ * 반응형에서는 두 열을 한 열로 바꾸고 글자·패딩을 줄입니다. 기능과 수신 데이터는 developer.js가 관리합니다.
+ */
 /* 코드 편집기·터미널의 공통 시각 언어로 개발자 관제 작업 공간을 구성합니다. */
 :root {
   --bg: #0b0d10;
@@ -14,6 +19,7 @@ body {
   background: #0b0d10;
   color: #d9dde4;
 }
+/* 사이드바와 메뉴 선택 상태. 화면 이동 기능은 HTML의 data-tab과 app.js 이벤트가 담당합니다. */
 .sidebar {
   background: #101216;
   border-color: #24272e;
@@ -116,6 +122,7 @@ header p {
   border-color: #4d303f;
   color: #ef9da9;
 }
+/* 소개 문구와 실제 응답 코드 패널을 두 열로 배치합니다. 폭이 좁으면 아래 미디어 쿼리가 한 열로 전환합니다. */
 .developer-hero {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
@@ -190,6 +197,7 @@ header p {
   background: #b5f77b;
   display: block;
 }
+/* 코드 창의 테두리·배경·최소 너비를 정의합니다. 이 CSS는 코드를 실행하지 않습니다. */
 .code-window {
   border: 1px solid #343b45;
   border-radius: 10px;
@@ -436,6 +444,7 @@ header p {
 .panel-title .subtle:hover {
   background: #283341;
 }
+/* 현재 브라우저의 수신 이벤트 표시 영역. 긴 행은 패널 내부에서만 스크롤합니다. */
 .terminal-panel {
   border: 1px solid #303845;
   background: #10141a;
@@ -726,6 +735,7 @@ header p {
     font-size: 9px;
   }
 }
+/* 작은 화면에서 열 수·여백·글자 크기를 조정합니다. 서버 표와 코드의 긴 내용은 자체 스크롤을 유지합니다. */
 @media (max-width: 700px) {
   .developer-hero {
     margin-bottom: 18px;

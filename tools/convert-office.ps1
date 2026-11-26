@@ -1,7 +1,11 @@
+# 생성한 DOCX/PPTX를 설치된 Word/PowerPoint에서 열어 실제 PDF로 내보내는 도구입니다.
+# Only 인자가 있으면 해당 파일만 처리하고 다른 문서의 변환 기록은 보존합니다.
+# 읽기 전용 열기와 finally의 Close/Quit로 문서 저장이나 프로세스 잔류를 줄입니다.
 # 번들 LibreOffice 부재 시 설치된 Microsoft Office의 기본 PDF 내보내기를 사용합니다.
 param([string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot), [string[]]$Only = @())
 $ErrorActionPreference='Stop'
 $docDirectory=Join-Path $ProjectRoot 'docs'
+# 변환 증빙에는 파일명·페이지 수·렌더러를 남기며 사용자 계정이나 비밀번호는 넣지 않습니다.
 $records=@()
 if($Only.Count -gt 0 -and (Test-Path -LiteralPath (Join-Path $ProjectRoot 'evidence/office-render.json'))) { $records=@(Get-Content -LiteralPath (Join-Path $ProjectRoot 'evidence/office-render.json') -Raw | ConvertFrom-Json) }
 $word=New-Object -ComObject Word.Application
