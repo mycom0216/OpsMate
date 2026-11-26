@@ -2,56 +2,56 @@
   {
     "pages": 3,
     "renderer": "Microsoft Word",
-    "pdf": "개발일정표.pdf",
-    "file": "개발일정표.docx"
+    "file": "개발일정표.docx",
+    "pdf": "개발일정표.pdf"
   },
   {
     "pages": 11,
     "renderer": "Microsoft Word",
-    "pdf": "데이터정의서.pdf",
-    "file": "데이터정의서.docx"
+    "file": "데이터정의서.docx",
+    "pdf": "데이터정의서.pdf"
   },
   {
     "pages": 2,
     "renderer": "Microsoft Word",
-    "pdf": "순서도.pdf",
-    "file": "순서도.docx"
+    "file": "순서도.docx",
+    "pdf": "순서도.pdf"
   },
   {
     "pages": 4,
     "renderer": "Microsoft Word",
-    "pdf": "요구사항명세서.pdf",
-    "file": "요구사항명세서.docx"
+    "file": "요구사항명세서.docx",
+    "pdf": "요구사항명세서.pdf"
   },
   {
     "pages": 3,
     "renderer": "Microsoft Word",
-    "pdf": "요구사항분석서.pdf",
-    "file": "요구사항분석서.docx"
+    "file": "요구사항분석서.docx",
+    "pdf": "요구사항분석서.pdf"
   },
   {
     "pages": 3,
     "renderer": "Microsoft Word",
-    "pdf": "테스트결과서.pdf",
-    "file": "테스트결과서.docx"
+    "file": "테스트결과서.docx",
+    "pdf": "테스트결과서.pdf"
   },
   {
     "pages": 3,
     "renderer": "Microsoft Word",
-    "pdf": "포트폴리오.pdf",
-    "file": "포트폴리오.docx"
+    "file": "포트폴리오.docx",
+    "pdf": "포트폴리오.pdf"
   },
   {
     "pages": 2,
     "renderer": "Microsoft Word",
-    "pdf": "프로젝트결과보고서.pdf",
-    "file": "프로젝트결과보고서.docx"
+    "file": "프로젝트결과보고서.docx",
+    "pdf": "프로젝트결과보고서.pdf"
   },
   {
     "pages": 3,
     "renderer": "Microsoft Word",
-    "pdf": "프로젝트기획서.pdf",
-    "file": "프로젝트기획서.docx"
+    "file": "프로젝트기획서.docx",
+    "pdf": "프로젝트기획서.pdf"
   },
   {
     "pages": 15,

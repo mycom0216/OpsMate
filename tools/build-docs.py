@@ -1,5 +1,6 @@
 """검증 증빙과 실제 SQLite 스키마로 한국어 MD 및 편집 가능한 DOCX를 생성합니다."""
 from pathlib import Path
+import sys
 import json, sqlite3, re, math
 from PIL import Image, ImageDraw, ImageFont
 from docx import Document
@@ -151,6 +152,8 @@ def render_doc(name,data):
     """동일 원본으로 MD와 DOCX를 만들고 페이지별로 내용이 분리되게 합니다."""
     md=[f'# OpsMate {name}','',data['intro'],'']
     document=Document(); sec=document.sections[0];sec.page_width=Cm(21);sec.page_height=Cm(29.7);sec.top_margin=Cm(2);sec.bottom_margin=Cm(2);sec.left_margin=Cm(2);sec.right_margin=Cm(2)
+    zoom=document.settings.element.find(qn('w:zoom'))
+    if zoom is not None:zoom.set(qn('w:percent'),'100')
     normal=document.styles['Normal'];normal.font.name='맑은 고딕';normal.font.size=Pt(10.5);normal.paragraph_format.space_after=Pt(9);normal.paragraph_format.line_spacing=1.25
     normal.element.rPr.rFonts.set(qn('w:eastAsia'),'맑은 고딕')
     for style in ['Title','Heading 1','Heading 2']:
@@ -164,7 +167,7 @@ def render_doc(name,data):
         borders=OxmlElement('w:pBdr')
         for edge in ['top','left','bottom','right','between']:
             item=OxmlElement('w:'+edge);item.set(qn('w:val'),'nil');borders.append(item)
-        pr.append(borders)
+        pr.insert_element_before(borders,'w:shd','w:tabs','w:spacing','w:ind','w:contextualSpacing','w:jc','w:rPr','w:sectPr')
     subtitle=document.add_paragraph('2026년 11월 26일  |  버전 1.0',style='Subtitle')
     for run in subtitle.runs:run.font.size=Pt(10);run.font.italic=False;run.font.color.rgb=RGBColor.from_string('63758A')
     document.add_paragraph(data['intro'])
@@ -193,7 +196,8 @@ def render_doc(name,data):
             image_path=OUT/s['image'];document.add_picture(str(image_path),width=Cm(17));md.extend([f"![{s['title']}]({s['image']})",''])
     document.core_properties.title='OpsMate '+name;document.core_properties.author='';document.core_properties.subject='IT 인프라 관제 프로젝트 제출 문서'
     document.save(OUT/f'{name}.docx');(OUT/f'{name}.md').write_text('\n'.join(md),'utf-8')
-for name,data in docs.items():render_doc(name,data)
+for name,data in docs.items():
+    if len(sys.argv)==1 or name in sys.argv[1:]:render_doc(name,data)
 (ROOT/'tools/doc-content.json').write_text(json.dumps(docs,ensure_ascii=False,indent=2),'utf-8')
 (ROOT/'tools/schedule.json').write_text(json.dumps(schedule,ensure_ascii=False,indent=2),'utf-8')
 print('한국어 MD 및 DOCX 생성',len(docs),'종, 도식 3종')

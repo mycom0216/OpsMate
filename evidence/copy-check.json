@@ -588,5 +588,6 @@
       "sha256": "561aaccb1c6c24c7da6038f519cd444f1d16d4a7b9f45a254bd9b88e0e4aac57",
       "bytes": 399
     }
-  ]
+  ],
+  "scope": "최초 복사 시점의 해시 기록. 최종 파일 집합은 Git HEAD 및 최종 ZIP 검증 파일 기준."
 }

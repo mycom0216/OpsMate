@@ -12,3 +12,5 @@ data/*.pid
 evidence/rendered/
 evidence/render-probe/
 docs/*.inspect.ndjson
+
+data/

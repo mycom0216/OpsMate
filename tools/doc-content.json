@@ -381,7 +381,7 @@
               "원격 저장소 및 ZIP",
               "2026-11-26",
               "2026-11-26",
-              "진행",
+              "완료",
               "권한 확인·동기화"
             ],
             [
@@ -1203,7 +1203,7 @@
       {
         "title": "배포 및 제출 상태",
         "paragraphs": [
-          "원격 저장소 상태: mycom0216/OpsMate 신규 비공개 저장소 생성 및 repo workflow 권한 확인. 최종 Commit Push 및 HEAD 검증은 별도 최종검증 파일에 기록.",
+          "원격 저장소 상태: https://github.com/mycom0216/OpsMate 비공개 저장소 Commit Push 완료. 3516021 로컬·원격 HEAD 일치 및 GitHub Actions 전체 단계 통과. 최종 패키지의 SHA는 별도 최종검증 파일에 기록.",
           "Docker 실기동: 실제 이미지 빌드 및 컨테이너 기동, 내부 HTTP 통합 검사 9개 통과. Windows 호스트 공개 포트 접속 미확인.",
           "MariaDB 실기동: MariaDB 11.4 전용 검증 DB에서 스키마·초기화·API 왕복 9개 통과.",
           "최종 ZIP과 Git에는 자격 증명, 실행 DB, .env, node_modules를 포함하지 않는다. 초기화 스크립트는 사용자 환경에서 새 비밀번호를 생성한다. 공개 데모 DB는 가상 지표만 포함하고 계정·토큰·세션은 비워 둔다."

@@ -1,0 +1,47 @@
+[
+  {
+    "output": "\nParagraphs: 69\nAll validations PASSED!",
+    "file": "개발일정표.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 292\nAll validations PASSED!",
+    "file": "데이터정의서.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 12\nAll validations PASSED!",
+    "file": "순서도.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 101\nAll validations PASSED!",
+    "file": "요구사항명세서.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 62\nAll validations PASSED!",
+    "file": "요구사항분석서.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 31\nAll validations PASSED!",
+    "file": "테스트결과서.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 17\nAll validations PASSED!",
+    "file": "포트폴리오.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 38\nAll validations PASSED!",
+    "file": "프로젝트결과보고서.docx",
+    "exit_code": 0
+  },
+  {
+    "output": "\nParagraphs: 32\nAll validations PASSED!",
+    "file": "프로젝트기획서.docx",
+    "exit_code": 0
+  }
+]
